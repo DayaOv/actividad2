@@ -1,7 +1,8 @@
 import javax.swing.*;
-import java.util.LinkedList;
-import java.util.List;
-import java. util. Scanner;
+import java.util.*;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class listas {
     private static Scanner leer = new Scanner(System.in);
@@ -31,11 +32,11 @@ public class listas {
                 int salario = leer.nextInt();
                 Empleado newEmpleado = new Empleado(id, nombre, apellido, salario);
                 listaempleado.add(newEmpleado);
+                System.out.println("AGREGADO");
                 }
         } catch (NumberFormatException ex) {
             System.out.println(" El valor no es un entero ");
             agregarempleado();
-
         }
         Menu.menu();
     }
@@ -54,7 +55,6 @@ public class listas {
             }
         }
         Menu.menu();
-
     }
     public static void actualizarempleado() {
         for (Empleado empleado : listaempleado) {
@@ -93,6 +93,52 @@ public class listas {
         Menu.menu();
     }
 
+    private static Stream<Empleado> filtrarEmpleados() {
+        return listaempleado.stream()
+                .filter(empleado -> empleado.getSalario() > 700000);
+    }
+
+    public static void mayorsalario(){
+        System.out.println("Empleado con mayor salario: ");
+        System.out.println(listaempleado.stream()
+                .max(Comparator.comparing(Empleado::getSalario)).get());
+        Menu.menu();
+    }
+    public static void menorsalario(){
+        System.out.println("Empleado con menor salario: ");
+        System.out.println(listaempleado.stream()
+                .min(Comparator.comparing(Empleado::getSalario)).get());
+        Menu.menu();
+    }
+
+    public static void orden(){
+        System.out.println("Orden de los empleados por NOMBRE: ");
+        listaempleado.stream()
+                .sorted(Comparator.comparing(Empleado::getNombre))
+                .forEach(System.out::println);
+                Menu.menu();
+    }
+    public static void sumasalarios(){
+        System.out.println("suma de los salarios de todos los empleados cuyo salario es mayor a 700000.");
+        filtrarEmpleados()
+                .map(Empleado::getSalario);
+                 Menu.menu();
+    }
+    public static void numerototal(){
+        System.out.println(" Los empleados son los siguientes: ");
+        listaempleado.stream()
+                .filter(empleado -> empleado.getApellido().toUpperCase().startsWith("A"))
+                .forEach(System.out::println);
+                Menu.menu();
+    }
+    public static void cincoprimeros(){
+        System.out.println(" 5 primeros empleados con el mayor salario: ");
+        listaempleado.stream()
+                .sorted(Comparator.comparing(Empleado::getSalario).reversed())
+                .limit(5)
+                .forEach(System.out::println);
+        Menu.menu();
+    }
         public static void salir(){
                     System.exit(0);
                 }

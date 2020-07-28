@@ -52,6 +52,6 @@ public class Empleado {
     }
     @Override
     public String toString(){
-        return " Id: " + getId() + " - Nombre: " + getNombre() + " - Apellido: " + getApellido() + " -  Salario: " + getSalario();
+        return " Id = " + getId() + " Nombre = " + getNombre() + " Apellido = " + getApellido() + " Salario = " + getSalario();
     }
 }
